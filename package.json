@@ -1,0 +1,20 @@
+{
+  "scripts": {
+    "lint-staged": "lint-staged --config .lintstagedrc",
+    "prepretty": "cd frontend",
+    "pretty": "prettier --write **/*.{js,ts,scss,md,yml,json}",
+    "postpretty": "cd ..",
+    "google-format": "bash ./tools/google-format.sh",
+    "deploy": "bash ./tools/deploy.sh",
+    "start": "bash ./tools/run-app.sh"
+  },
+  "dependencies": {
+    "yarn": "^1.21.1",
+    "yarn-install": "^1.0.0"
+  },
+  "devDependencies": {
+    "husky": "0.15.0-rc.13",
+    "lint-staged": "^7.0.0",
+    "prettier": "^1.14.3"
+  }
+}

@@ -1,0 +1,89 @@
+<section fxLayout="row wrap">
+  <app-page-header [header]="'Account'"></app-page-header>
+</section>
+
+<section role="main" class="c-drawer">
+  <mat-toolbar [color]="'primary'">Your account</mat-toolbar>
+  <mat-card role="presentation">
+    <mat-card-content>
+      <mat-tab-group class="c-drawer__c-tab--heavy">
+        <mat-tab label="Password" fxLayout.md="row" fxLayout.sm="row" fxLayout.xs="column"
+                 fxLayoutAlign.lt-sm="center center">
+          <ng-template mat-tab-label>
+            <mat-icon>security</mat-icon>
+          </ng-template>
+          <form [formGroup]="passwordForm" class="c-drawer__element" fxLayout="column" fxFlex.gt-xs="50"
+                fxFlex.xs="100">
+            <mat-form-field>
+              <input aria-label="Password" aria-required="true" type="password" #currentPassword matInput
+                     required="required" placeholder="Current password" formControlName="oldPassword">
+            </mat-form-field>
+            <mat-error *ngIf="passwordForm.get('oldPassword').touched &&
+            passwordForm.get('oldPassword').hasError('required')">
+              Password is required
+            </mat-error>
+
+            <mat-form-field>
+              <input aria-label="New password" aria-required="true" #newPassword matInput
+                     required="required" placeholder="New password" formControlName="newPassword"
+                     [type]="hidePassword ? 'password' : 'text'">
+              <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility' :
+                'visibility_off'}}
+              </mat-icon>
+            </mat-form-field>
+            <mat-error *ngIf="passwordForm.get('oldPassword').touched &&
+            passwordForm.get('oldPassword').hasError('required')">
+              Password is required
+            </mat-error>
+
+            <mat-form-field>
+              <input aria-label="Repeat new password" aria-required="true" #repeatPassword matInput
+                     required="required" placeholder="Repeat new password" formControlName="newPasswordRepeat"
+                     [type]="hidePassword ? 'password' : 'text'">
+              <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility' :
+                'visibility_off'}}
+              </mat-icon>
+            </mat-form-field>
+            <mat-error *ngIf="!arePasswordsIdentical(newPassword.value, repeatPassword.value)">
+              Passwords do not match
+            </mat-error>
+            <mat-error *ngIf="passwordForm.get('newPasswordRepeat').touched &&
+            passwordForm.get('newPasswordRepeat').hasError('required')">
+              Password is required
+            </mat-error>
+          </form>
+          <button aria-label="Save" type="submit" mat-raised-button color="accent" [disabled]="!passwordForm.valid"
+                  (click)="savePassword()">Save
+          </button>
+        </mat-tab>
+
+        <mat-tab label="Email">
+          <ng-template mat-tab-label>
+            <mat-icon>email</mat-icon>
+          </ng-template>
+          <form [formGroup]="emailForm" class="c-drawer__element" fxLayout="column" fxFlex.gt-xs="50" fxFlex.xs="100">
+            <mat-form-field>
+              <input aria-label="Email" aria-required="true" type="email" #currentEmail matInput required="required"
+                     placeholder="Email"
+                     formControlName="email">
+            </mat-form-field>
+            <mat-error *ngIf="emailForm.get('email').hasError('pattern')">
+              Please enter a valid email address
+            </mat-error>
+            <mat-error *ngIf="emailForm.get('email').touched && emailForm.get('email').hasError('required')">
+              Email is required
+            </mat-error>
+            <mat-error *ngIf="emailForm.get('email').touched &&
+            emailForm.get('email').hasError('emailTaken')">
+              Email already in use
+            </mat-error>
+          </form>
+
+          <button aria-label="Submit" type="submit" mat-raised-button color="accent" [disabled]="!emailForm.valid"
+                  (click)="saveEmail()">Save
+          </button>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</section>

@@ -1,0 +1,78 @@
+<section fxLayout="row wrap">
+  <app-page-header [header]="'Manage leave applications'"></app-page-header>
+
+  <div fxLayoutAlign="center center" fxFlex="100">
+    <mat-spinner aria-label="loading" *ngIf="isFetching"></mat-spinner>
+  </div>
+</section>
+
+<section class="c-drawer" *ngIf="!isFetching">
+  <mat-toolbar [color]="'primary'">Manage leave applications</mat-toolbar>
+  <mat-card role="presentation">
+    <mat-table role="table" #table [dataSource]="dataSource">
+
+      <ng-container matColumnDef="applicationId">
+        <mat-header-cell aria-label="Application ID" *matHeaderCellDef> Application ID</mat-header-cell>
+        <mat-cell *matCellDef="let leaveApplication"> {{leaveApplication.applicationId}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="from">
+        <mat-header-cell aria-label="From" *matHeaderCellDef> From</mat-header-cell>
+        <mat-cell *matCellDef="let leaveApplication"> {{leaveApplication.startDate}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="to">
+        <mat-header-cell *matHeaderCellDef> To</mat-header-cell>
+        <mat-cell *matCellDef="let leaveApplication"> {{leaveApplication.endDate}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="employeeName">
+        <mat-header-cell aria-label="Employee name" *matHeaderCellDef> Employee name</mat-header-cell>
+        <mat-cell *matCellDef="let leaveApplication">
+          <div *ngIf="getSubjectFullName(leaveApplication.subjectId) as subject; else loadingTemplate">
+            {{subject.firstName}} {{subject.lastName}}
+          </div>
+          <ng-template #loadingTemplate>loading...</ng-template>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="info">
+        <mat-header-cell *matHeaderCellDef>Additional information</mat-header-cell>
+        <mat-cell aria-label="Additional information" *matCellDef="let leaveApplication">
+          <mat-icon aria-hidden="false" role="presentation" class="mat-24"
+                    [ngClass]="{'c-drawer__element--off': !leaveApplication.message}"
+                    matTooltip="{{leaveApplication.message}}" [matTooltipPosition]="'above'">mode_comment
+          </mat-icon>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="reject">
+        <mat-header-cell aria-label="Reject" *matHeaderCellDef> Reject</mat-header-cell>
+        <mat-cell *matCellDef="let leaveApplication">
+          <button aria-label="Reject" type="submit" mat-icon-button color="accent"
+                  (click)="rejectLeaveApplication(leaveApplication.processInstanceId)">
+            <mat-icon class="mat-24">cancel</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="approve">
+        <mat-header-cell *matHeaderCellDef> Approve</mat-header-cell>
+        <mat-cell aria-label="Approve" *matCellDef="let leaveApplication">
+          <button aria-label="Approve" type="submit" mat-icon-button color="accent"
+                  (click)="approveLeaveApplication(leaveApplication.processInstanceId)">
+            <mat-icon class="mat-24">done</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator #paginator
+                   [pageSize]="10"
+                   [pageSizeOptions]="[5, 10, 20]">
+    </mat-paginator>
+  </mat-card>
+</section>

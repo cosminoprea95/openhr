@@ -1,0 +1,87 @@
+<section fxLayout="row wrap">
+  <div fxLayoutAlign="center center" fxFlex="100">
+    <mat-spinner aria-label="loading" *ngIf="isFetching"></mat-spinner>
+  </div>
+</section>
+
+<section class="c-dashboard" fxLayout="row wrap" fxLayoutAlign.gt-md="start start"
+         fxLayoutAlign.md="space-between start" fxLayoutAlign.lt-md="space-between start">
+
+  <mat-card role="figure" class="c-dashboard__card" fxFlex.gt-sm="25" fxFlex.sm="35" fxFlex.xs="90" *ngIf="!isFetching">
+    <mat-card-header>
+      <mat-card-title>Total allowance</mat-card-title>
+      <mat-card-subtitle>{{currentYear}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <app-number-indicator [number]="subject?.hrInformation?.allowance"
+                            [description]="'Total allowance'"></app-number-indicator>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card role="figure" class="c-dashboard__card" fxFlex.gt-sm="25" fxFlex.sm="35" fxFlex.xs="90" *ngIf="!isFetching">
+    <mat-card-header>
+      <mat-card-title>Used allowance</mat-card-title>
+      <mat-card-subtitle>{{currentYear}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <app-number-indicator [number]="subject?.hrInformation?.usedAllowance"
+                            [description]="'Used allowance'"></app-number-indicator>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card role="figure" class="c-dashboard__card" fxFlex.gt-sm="25" fxFlex.sm="35" fxFlex.xs="90" *ngIf="!isFetching">
+    <mat-card-header>
+      <mat-card-title>Left allowance</mat-card-title>
+      <mat-card-subtitle>{{currentYear}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <app-number-indicator [number]="allowanceLeft"
+                            [description]="'Left allowance'"></app-number-indicator>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card role="figure" class="c-dashboard__card" fxFlex.gt-sm="25" fxFlex.sm="35" fxFlex.xs="90"
+            *ngIf="(role === 'ROLE_MANAGER' || role === 'ROLE_HRTEAMMEMBER') && !isFetching">
+    <mat-card-header>
+      <mat-card-title>Total expenditures of the company</mat-card-title>
+      <mat-card-subtitle>{{totalDelegationExpenditure.year}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <app-number-indicator [number]="totalDelegationExpenditure.totalExpenditure | currency:'GBP'"
+                            [description]="totalDelegationExpenditure.year"></app-number-indicator>
+    </mat-card-content>
+  </mat-card>
+
+  <div role="figure" class="c-dashboard__chart" fxFlex.gt-sm="50" fxFlex.sm="100" fxFlex.lt-sm="100"
+       [hidden]="isFetching">
+    <canvas #monthlySummariesChart id="monthlySummariesChart">{{ monthlySummariesChart }}</canvas>
+  </div>
+
+
+  <div class="c-dashboard__chart" fxFlex.gt-sm="100" fxFlex.sm="100" fxFlex.lt-sm="100" *ngIf="!isFetching">
+
+    <h3 class="c-dashboard__label">People on leave today</h3>
+    <mat-table role="table" #subjectsOnLeave [dataSource]="dataSource">
+      <ng-container matColumnDef="firstName">
+        <mat-header-cell *matHeaderCellDef>First name</mat-header-cell>
+        <mat-cell *matCellDef="let subject"> {{subject.personalInformation.firstName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="lastName">
+        <mat-header-cell *matHeaderCellDef>Last name</mat-header-cell>
+        <mat-cell *matCellDef="let subject"> {{subject.personalInformation.lastName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="position">
+        <mat-header-cell *matHeaderCellDef>Position</mat-header-cell>
+        <mat-cell *matCellDef="let subject"> {{subject.employeeInformation.position}}
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator [pageSize]="5"></mat-paginator>
+  </div>
+</section>

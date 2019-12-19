@@ -1,0 +1,62 @@
+<div class="c-sidenav__element">
+  <button mat-button class="c-sidenav__item" [routerLink]="[{ outlets: { core: ['dashboard'] } }]">
+    <i class="material-icons c-sidenav__icon">dashboard</i>
+    Dashboard
+  </button>
+
+  <button id="sidenav-personal-details" mat-button class="c-sidenav__item"
+          [routerLink]="[{ outlets: { core: ['personal-details'] } }]">
+    <i class="material-icons c-sidenav__icon">account_circle</i>
+    Personal details
+  </button>
+
+  <button mat-button class="c-sidenav__item" [routerLink]="[{ outlets: { core: ['leave-application'] } }]">
+    <i class="material-icons c-sidenav__icon">card_travel</i>
+    Leave application
+  </button>
+
+  <button mat-button class="c-sidenav__item" [routerLink]="[{ outlets: { core: ['delegation'] } }]">
+    <i class="material-icons c-sidenav__icon">airplanemode_active</i>
+    Delegation
+  </button>
+
+  <button mat-button class="c-sidenav__item" [routerLink]="[{ outlets: { core: ['my-applications'] } }]">
+    <i class="material-icons c-sidenav__icon">view_day</i>
+    My applications
+  </button>
+
+  <button mat-button *ngIf="role === 'ROLE_MANAGER' || role === 'ROLE_HRTEAMMEMBER'" class="c-sidenav__item"
+          [routerLink]="[{ outlets: { core: ['employees'] } }]">
+    <i class="material-icons c-sidenav__icon">people</i>
+    Employees
+  </button>
+
+  <button mat-button *ngIf="role === 'ROLE_MANAGER' || role === 'ROLE_HRTEAMMEMBER'"
+          class="c-sidenav__item" [routerLink]="[{ outlets: { core: ['manage-workers-data'] } }]">
+    <i class="material-icons c-sidenav__icon">group</i>
+    Manage workers' data
+  </button>
+
+  <button mat-button *ngIf="role === 'ROLE_MANAGER' || role === 'ROLE_HRTEAMMEMBER'" class="c-sidenav__item"
+          [routerLink]="[{ outlets: { core: ['manage-leave-applications'] } }]">
+    <i class="material-icons c-sidenav__icon">view_list</i>
+    Manage leave applications
+  </button>
+
+  <button mat-button *ngIf="role === 'ROLE_MANAGER' || role === 'ROLE_HRTEAMMEMBER'" class="c-sidenav__item"
+          [routerLink]="[{ outlets: { core: ['manage-delegation-applications'] } }]">
+    <i class="material-icons c-sidenav__icon">gavel</i>
+    Manage delegations
+  </button>
+
+  <button mat-button *ngIf="role === 'ROLE_MANAGER' || role === 'ROLE_HRTEAMMEMBER'" class="c-sidenav__item"
+          [routerLink]="[{ outlets: { core: ['add-employee'] } }]">
+    <i class="material-icons c-sidenav__icon">person_add</i>
+    Add employee
+  </button>
+
+  <button mat-button class="c-sidenav__item" [routerLink]="[{ outlets: { core: ['about'] } }]">
+    <i class="material-icons c-sidenav__icon">info_outline</i>
+    About
+  </button>
+</div>

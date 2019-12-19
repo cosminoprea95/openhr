@@ -1,0 +1,19 @@
+{
+  "properties": [
+    {
+      "name": "mail.transport.protocol",
+      "type": "java.lang.String",
+      "description": "Protocol to be used."
+    },
+    {
+      "name": "mail.smtp.auth",
+      "type": "java.lang.String",
+      "description": "Defines necessity for SMPT authentication."
+    },
+    {
+      "name": "mail.smtp.starttls.enable",
+      "type": "java.lang.String",
+      "description": "Defines TLS enabled on start."
+    }
+  ]
+}
